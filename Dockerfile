@@ -4,18 +4,16 @@
 
 FROM python:3.11-slim
 
-# Set working directory
+# Install git (IMPORTANT)
+RUN apt-get update && apt-get install -y git && apt-get clean
+
 WORKDIR /app
 
-# Copy requirements first (better caching)
 COPY requirements.txt .
 
-# Upgrade pip and install dependencies
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project files
 COPY . .
 
-# Start bot
-CMD ["python3", "bot.py"]
+CMD ["python3","bot.py"]
